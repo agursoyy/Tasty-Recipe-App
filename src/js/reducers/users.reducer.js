@@ -31,7 +31,7 @@ export function authenticatedUser(state = {}, action) {
       return {user: action.user}
     case userConstants.GET_USER_FAILURE:
       return {};
-    case userConstants.LOGOUT:  // if user logout authen.User data will be cleaned besides token stored in cookie.
+    case userConstants.LOGOUT:  // if user logout authenticadtedUser data will be cleaned besides TOKEN stored in cookie.
       return {};
       default:
         return state;

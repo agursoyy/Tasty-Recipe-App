@@ -28,7 +28,7 @@ class Login extends React.Component {
     redirect() {
         const {loggedIn} = this.props;
         if(loggedIn) {
-            this.props.history.push('/');
+            this.props.history.push('/recipes');
         }
     }
     handleInputChange(event) {
@@ -88,11 +88,8 @@ class Login extends React.Component {
             new Promise((resolve,reject) => {
                 this.props.login(this.state.email,this.state.password);
                 resolve('LOGGED IN');
-            }).then(()=> {
-                setTimeout(() => {
-                    this.props.authenticatedUser();
-                }, 2000);
-            }).catch(err => {
+            })
+            .catch(err => {
                 console.error(err);
             })
 
@@ -100,7 +97,6 @@ class Login extends React.Component {
     }
     render() {
         const { alert,loggingIn } = this.props;
-      
         return (
             <div className={`${styles.container} container-fluid`}>
                 <div className = {`row`}>

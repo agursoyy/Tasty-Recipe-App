@@ -13,17 +13,10 @@ $font-family-title: 'Roboto', sans-serif;
         color: $alert-danger-color;
     }
     form.recipeForm {
-        .formGroup {
-            input {
-                border-radius: 0px;
 
-            }
-            select {
-                border-radius: 0px;
-            }
-        }
         .removeElementBtn {
-            border-radius: 0px !important;
+            border-top-left-radius: 0px !important;
+            border-bottom-left-radius: 0px !important;
         }
         
         .ingredientContainer {
@@ -34,11 +27,15 @@ $font-family-title: 'Roboto', sans-serif;
                 margin-bottom: 10px;
                 .ingredientAmount  {
                     display: flex;
+                    input {
+                        border-top-right-radius: 0;
+                        border-bottom-right-radius: 0;
+                    }
                 }
             }
         }
         .directionContainer {
-            margin-bottom: 12px !important;
+            margin-bottom: 22px !important;
             .directionTitle {
                 font-weight: 600;
                 border: 1px solid red;
@@ -46,7 +43,10 @@ $font-family-title: 'Roboto', sans-serif;
             .direction {
                 display: flex;
                 margin-bottom: 12px;
-               
+                input {
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
             }
         }
         .recipeInputError {

@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { recipeActions} from '../js/actions';
 import {Link} from 'react-router-dom';
+import Loading from './Loading';
 import styles from '../styles/recipeDetail.module.scss';
 
 
@@ -31,13 +32,18 @@ class RecipeDetail extends React.Component {
          const arr = directions.split("\n");
          return arr;
      }
-
+     getImageRecipe() {
+        const {recipe} = this.props;
+       const img = recipe.RecipeImages.imagePath ? <img src={`data:image/jpg;base64,${recipe.RecipeImages.image}`} alt="rec_img"/> 
+       : <img src={require("../assets/french.jpg")} alt="recipe_img"/>;
+       return img;
+    }
     render() {
         console.log(this.props.recipe);
         const {loading, recipe, alert} = this.props;
         if(loading ||  (!recipe && alert.type !== "alert-danger")) {
             return(
-                <h5>loading...</h5>
+                <Loading/>
             )
         }else if(alert.type === "alert-danger") {
             return (
@@ -52,7 +58,7 @@ class RecipeDetail extends React.Component {
                             <h2 className ={`d-none d-md-block ${styles.title}`}>{recipe.name} ({(recipe.RecipeCategory.name.toLowerCase())})</h2>
                             <h5 className={`d-block d-md-none  ${styles.title}`}>{recipe.name} ({(recipe.RecipeCategory.name.toLowerCase())}</h5>
                             <div className={styles.imgContainer}>
-                                <img src={require("../assets/french.jpg")} alt="recipe_img"/>
+                               { <img src={require("../assets/french.jpg")} alt="recipe_img"/>}
                             </div>
                             <div className={`${styles.information}`}>
                                <div>
@@ -79,6 +85,7 @@ class RecipeDetail extends React.Component {
                                 <hr/>
                                 <ul className={`row ${styles.ingredientsList}`}>
                                     {
+                                        recipe.Ingredients.constructor === Array &&
                                         recipe.Ingredients.map((ingredient,index) =>
                                         <li key={index} className="col-sm-6">
                                             <i class="fas fa-dot-circle mr-3"></i>
@@ -94,7 +101,7 @@ class RecipeDetail extends React.Component {
                                 <ol className={styles.recipeDirectionsList}>
                                     { 
                                         this.getRecipeDirections(recipe.directions).map((direction,index) =>
-                                        <li key={index}>
+                                        <li key={index} className="border">
                                             {direction}
                                         </li>)
                                     }

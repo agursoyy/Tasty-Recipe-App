@@ -15,6 +15,7 @@ import CreateRecipe from '../Components/CreateRecipe';
 class App extends React.Component {
   
   componentDidMount() {
+    console.log(process.env.REACT_APP_LOGIN_URI);
     history.listen((location, action) => {
       this.props.clearAlerts();
     });
@@ -36,7 +37,7 @@ class App extends React.Component {
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/recipes" render={(props) =><RecipeList key="1" {...props} pageTitle="All Recipes"/>} />
                 <Route exact path="/:recipeName-recipe/:recipeId" render={(props) =><RecipeDetail {...props}/>} />
-                <Route exact path="/post-recipe" component={CreateRecipe}/>
+                <Route exact path="/create-recipe" component={CreateRecipe}/>
               </Switch>
             </div>
          </Router>

@@ -27,7 +27,7 @@ function fetchAllRecipes(page) {
                     dispatch(alertActions.error(error.response.data));
                 }
             })
-        }, 500);  
+        }, 380);  
     };
 
     function request(page) { return { type: recipeConstants.GETALL_RECIPES_REQUEST, page } }
@@ -107,7 +107,7 @@ function fetchAllIngredients() {
     function failure(error) { return { type: recipeConstants.GETALL_INGREDIENTS_FAILURE, error } }
 }
 
-function createRecipe(recipe) {
+function createRecipe(recipe) { // returns promise
     return dispatch => {
         dispatch(request(recipe));
         setTimeout(() => {
@@ -117,7 +117,7 @@ function createRecipe(recipe) {
                 dispatch(alertActions.success('Recipe has been posted successfully.'));
                 setTimeout(() => {
                     history.push('/'); 
-                }, 2200);
+                }, 1200);
             }).catch(error => {
                 dispatch(failure(error));
                 if(error.response && error.response.status === 400) {
@@ -131,3 +131,4 @@ function createRecipe(recipe) {
     function success(recipe) { return { type: recipeConstants.CREATE_RECIPE_SUCCESS, recipe } }
     function failure(error) { return { type: recipeConstants.CREATE_RECIPE_FAILURE, error } }
 }
+

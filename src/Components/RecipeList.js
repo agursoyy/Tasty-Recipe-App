@@ -4,7 +4,9 @@ import { recipeActions } from '../js/actions';
 import queryString from 'query-string'  
 
 import Recipe from './Recipe';
+import loading from './Loading';
 import styles from '../styles/recipeList.module.scss';
+import Loading from './Loading';
 
 class RecipeList extends React.Component {
     componentDidMount() {
@@ -28,11 +30,11 @@ class RecipeList extends React.Component {
     }
     render(){
         
-        console.log(this.props);
+        console.log(this.props.recipes);
         const {loading, recipes, alert} = this.props;
         if(loading || (!recipes && alert.type !== "alert-danger")) {
             return(
-                <h5>loading...</h5>
+                <Loading/>
             )
         }
         else if(alert.type === "alert-danger") {

@@ -12,21 +12,23 @@ class authenticatedNavbar extends React.Component {
         const {loggedIn, loading, user} = this.props;
         if(loading) {
             return(
-                <ul className="navbar-nav ml-auto mr-2">
-                <h5>loading...</h5>
+                <ul className="navbar-nav mr-2">
+                    <li className="nav-item">
+                        <h5>loading...</h5>
+                    </li>
 
                 </ul>
             )
         }
         if(!loggedIn) {
             return (
-                <ul className="navbar-nav ml-auto mr-2">
+                <ul className="navbar-nav mr-2">
                     <li className="nav-item">
                         <div className="account">
                                 <NavLink to="/login">
                                     <i className="fas fa-user-circle login-icon p-2"></i>
                                 </NavLink>
-                                <NavLink to="/signup" className="signup-link">Create an account</NavLink>                                       
+                                <NavLink to="/signup" className="signup-link">Join for free!</NavLink>                                       
                             </div>
                     </li>
                 </ul>  
@@ -37,7 +39,7 @@ class authenticatedNavbar extends React.Component {
             <>
                 {
                     user &&
-                    <ul className="navbar-nav ml-auto">
+                    <ul className="navbar-nav">
                         <li className="dropdown nav-item authenticated-user">
                             <a className="nav-link dropdown-toggle authenticated-user-toggler" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">
                                 <span className="mr-2">
@@ -49,7 +51,7 @@ class authenticatedNavbar extends React.Component {
                             </a>
                             <div className="dropdown-menu dropdown-menu-right  authenticated-user-menu">
                                 <Link to='/favori-filmlerim?page=1' className="btn btn-link nav-link dropdown-item">Favoriler</Link>
-                                <button onClick={this.logOut.bind(this)} className="btn btn-link nav-link dropdown-item">Çıkış Yap</button>
+                                <button onClick={this.logOut.bind(this)} className="btn btn-link nav-link dropdown-item">Logout</button>
                             </div>
                         </li>
                     </ul> 

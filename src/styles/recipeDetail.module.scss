@@ -8,9 +8,7 @@ $font-family-title: 'Roboto', sans-serif;
     }
 }
 .container {
-    border: 1px solid red;
     padding: $component-container-padding;
-
     .recipeContainer {
         .title {
             margin-bottom: 30px;
@@ -76,16 +74,12 @@ $font-family-title: 'Roboto', sans-serif;
                 counter-reset: my-awesome-counter;
                 flex-wrap: wrap;
                 padding: 0 !important;
-                .direction {
-                    padding: 10px;
-                } 
                 li {
-                    padding: 12px;
+                    padding: 6px 0px;
                     counter-increment: my-awesome-counter;
                     display: flex;
                     align-items: center;
-                    width: 50%;
-                    font-size: 0.8rem;
+                    font-size: 1rem;
                     margin-bottom: 0.5rem;
                 }
                 li::before {

@@ -1,8 +1,6 @@
 import { authHeader, session} from '../helpers';
-import { LOGIN_URI,SIGNUP_URI,AUTHENTICATED_USER_URI } from './service-urls';
 import axios from 'axios';
-const dotenv = require("dotenv");
-dotenv.config();
+
 export const userService = {
     login,
     logout,
@@ -11,6 +9,8 @@ export const userService = {
 };
 
 function login(email, password) {
+    console.log('ALP');
+    const LOGIN_URI = process.env.REACT_APP_LOGIN_URI;
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -32,6 +32,7 @@ function logout() {
 
 
 function register(user) {
+    const SIGNUP_URI = process.env.REACT_APP_SIGNUP_URI;
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -40,6 +41,7 @@ function register(user) {
 }
 
 function authenticatedUser() {
+    const AUTHENTICATED_USER_URI = process.env.REACT_APP_AUTHENTICATED_USER_URI;
     const requestOptions = {
         method: 'GET',
         headers: {...authHeader()}

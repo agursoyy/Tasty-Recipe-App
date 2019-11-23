@@ -2,6 +2,7 @@ import { userConstants } from '../constants';
 import { userService } from '../services';
 import { alertActions } from './alert.actions';
 import { history } from '../helpers';
+import {store} from '../helpers'
 
 export const userActions = {
     login,
@@ -21,8 +22,8 @@ function login(email, password) {
             }).then(() => {
                 setTimeout(() => {
                     history.push('/'); 
+                    store.dispatch(authenticatedUser());
                 }, 1000);
-                
             })
             .catch(error => {
                 dispatch(failure(error));

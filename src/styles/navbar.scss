@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather:400,400i,700&display=swap');
+
 $navbar-bg-color: #fff;
 $navitem-color: #f04948;
 $navitem-color-secondary: #424141;
@@ -5,40 +7,37 @@ $navitem-font-family: Merriweather,serif;
 $not-box-shadow: none !important;
 #navbar {
     background-color: $navbar-bg-color;
-    
     @media(min-width: 992px) {
         
     }
     .container {
+        .navbar-toggler {
+            background-color: $navitem-color;
+            &:focus {
+                outline: none;
+
+            }
+            .toggler-icon {
+                color: #fff;
+                font-size: 1.3em;
+            }
+        }
         @media(min-width: 992px) {
         }
-        .navbar-brand.mobile-brand{
-            display: none;
-        }
-        @media(max-width: 991px) {
-            .navbar-brand.mobile-brand{
-                display: block;
-                img {
-                    height: 40px;
-                }
-            }
+        .navbar-brand.mobile-brand img{
+            height: 49px;
         }
         .navbar-collapse {
-            .navbar-brand{
-                display: none;
-            }
             @media(min-width: 992px) {
-                .navbar-brand {
-                    display: block;
+                .navbar-brand.desktop-brand {
                     img {
                         height: 60px;
                     }
                 }
             }
-
-            @media(min-width: 1168px) {
-                .navbar-brand img{
-                    height: 82px;
+            @media(min-width: 1280px) {
+                .navbar-brand.desktop-brand img{
+                    height: 74px;
                 }
             }
             .nav-item {
@@ -73,12 +72,13 @@ $not-box-shadow: none !important;
                         font-weight: 700;
                         color: $navitem-color;
                         display: flex;
+                        align-items: center;
                         flex-direction: row;
                         flex-wrap: wrap;
                     }
                     .authenticated-user-menu {
                         border-color: transparent;
-                        top: 70px;
+                        top: 60px;
                         background-color: $navbar-bg-color !important;
                         border-radius: 0;
                         .nav-link {
@@ -99,6 +99,7 @@ $not-box-shadow: none !important;
                 .search-box {
                     position: relative;
                    .search-box-input {
+                    box-shadow: $not-box-shadow;
                     padding-top: 25px;
                     padding-bottom: 25px;
                     color: $navitem-color-secondary;
@@ -106,7 +107,6 @@ $not-box-shadow: none !important;
                     font-weight: 700;
                     font-size: 1em;
                     padding-left: 55px;
-                    box-shadow: $not-box-shadow;
                     border: 1.2px solid #e5e5e5;
                     border-radius: 0;
                         &::-webkit-input-placeholder { /* Edge */

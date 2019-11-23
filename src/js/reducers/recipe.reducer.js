@@ -54,7 +54,7 @@ export function createRecipe(state={},action) {
         case recipeConstants.CREATE_RECIPE_REQUEST:
           return { creating_recipe: true };
         case recipeConstants.CREATE_RECIPE_SUCCESS:
-          return {};
+          return {created_recipe: true};
         case recipeConstants.CREATE_RECIPE_FAILURE:
           return {};
         default:

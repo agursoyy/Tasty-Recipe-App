@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import Loading from './Loading';
 class Home extends React.Component {
     componentDidMount() {
-      this.redirect();
     }
     redirect() {
         const {loggedIn} = this.props;
@@ -13,7 +12,7 @@ class Home extends React.Component {
     }
     render() {
         return(
-            <h1>LOGGED IN</h1>
+            <Loading/>
         )
     }
 }
