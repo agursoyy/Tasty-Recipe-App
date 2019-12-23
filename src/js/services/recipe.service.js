@@ -2,15 +2,22 @@ import axios from 'axios';
 import {authHeader} from '../helpers';
 export const recipeService = {
     fetchAllRecipes,
+    fetchAuthenticatedUserRecipes,
     fetchRecipeByID,
     fetchAllCategories,
     fetchAllIngredients,
-    createRecipe
+    createRecipe,
+    addFavorites,
+    deleteFromFavorites
 }
 function fetchAllRecipes(page) {
     const ALL_RECIPES_URI_PAGE = process.env.REACT_APP_ALL_RECIPES_URI + page;
     console.log(ALL_RECIPES_URI_PAGE);
     return axios.get(ALL_RECIPES_URI_PAGE).then(res => res.data);
+}
+function fetchAuthenticatedUserRecipes(page) {
+    const USER_RECIPES_URI_PAGE = process.env.REACT_APP_USER_RECIPES_URI + page;
+    return axios.get(USER_RECIPES_URI_PAGE).then(res => res.data);
 }
 function fetchRecipeByID(id) {
     const RECIPE_BY_ID_URI_ID = process.env.REACT_APP_RECIPE_BY_ID_URI + id;
@@ -34,4 +41,21 @@ function createRecipe(recipe) {
         headers: { ...authHeader(), 'Content-Type': 'application/json'},
     };
     return axios.post(CREATE_RECIPE_URI,recipe, requestOptions);
+}
+function addFavorites(id) {
+    const ADD_FAVORITES_URI = process.env.REACT_APP_ADD_FAVORITES_URI;
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json'},
+    };
+    return axios.post(ADD_FAVORITES_URI,{recipeId: id},requestOptions).then(res => res.data);
+}
+function deleteFromFavorites(id) {
+    const DELETE_FROM_FAVORITES_URI = process.env.REACT_APP_DELETE_FROM_FAVORITES_URI;
+    console.log(DELETE_FROM_FAVORITES_URI);
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json'},
+    };
+    return axios.post(DELETE_FROM_FAVORITES_URI,{recipeId: id},requestOptions).then(res => res.data);
 }

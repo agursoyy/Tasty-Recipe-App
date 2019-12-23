@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {recipeActions,alertActions} from '../js/actions';
+import {recipeActions} from '../js/actions';
 import styles from '../styles/createRecipe.module.scss';
 
 class CreateRecipe extends React.Component {

@@ -17,6 +17,9 @@ export const userConstants = {
     GET_USER_SUCCESS: 'GET_USER_SUCCESS',
     GET_USER_FAILURE: 'GET_USER_REQUEST',
     
+    UPDATE_USER_REQUEST: 'UPDATE_USER_REQUEST',  // after request turns into success , dispatch get_user_request
+    UPDATE_USER_FAILURE: 'UPDATE_USER_FAILURE',
+    
     DELETE_REQUEST: 'USERS_DELETE_REQUEST',
     DELETE_SUCCESS: 'USERS_DELETE_SUCCESS',
     DELETE_FAILURE: 'USERS_DELETE_FAILURE'    

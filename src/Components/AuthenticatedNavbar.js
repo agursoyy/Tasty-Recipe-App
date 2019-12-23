@@ -10,7 +10,7 @@ class authenticatedNavbar extends React.Component {
     }
     render() {
         const {loggedIn, loading, user} = this.props;
-        if(loading) {
+        if(!user && loading) {
             return(
                 <ul className="navbar-nav mr-2">
                     <li className="nav-item">
@@ -50,7 +50,12 @@ class authenticatedNavbar extends React.Component {
                                 </span>
                             </a>
                             <div className="dropdown-menu dropdown-menu-right  authenticated-user-menu">
-                                <Link to='/favori-filmlerim?page=1' className="btn btn-link nav-link dropdown-item">Favoriler</Link>
+                                <Link to="/create-recipe" className="btn btn-link nav-link dropdown-item">
+                                    Post a recipe
+                                </Link>
+                                <Link to='/recipe/favorites' className="btn btn-link nav-link dropdown-item">Favoriler</Link>
+                                <Link to='/user/account' className="btn btn-link nav-link dropdown-item">Account</Link>
+
                                 <button onClick={this.logOut.bind(this)} className="btn btn-link nav-link dropdown-item">Logout</button>
                             </div>
                         </li>

@@ -1,9 +1,11 @@
+@import "./utilities/variables.scss";
 @import url('https://fonts.googleapis.com/css?family=Merriweather:400,400i,700&display=swap');
 
 $navbar-bg-color: #fff;
-$navitem-color: #f04948;
-$navitem-color-secondary: #424141;
+$navitem-color: $color-primary;
+$navitem-color-secondary: $color-secondary;
 $navitem-font-family: Merriweather,serif;
+
 $not-box-shadow: none !important;
 #navbar {
     background-color: $navbar-bg-color;
@@ -86,11 +88,15 @@ $not-box-shadow: none !important;
                             color: $navitem-color;
                             font-family: $navitem-font-family;
                             font-size: 1em;
-                            font-weight: 600;
+                            font-weight: 700 !important;
                             &:active {
                                 background-color:$navitem-color;
                                 color: #fff;
                             }
+                            /*&:hover {
+                                background-color: #f8f9fa;
+                            }*/
+                         
                         }
                     }
                 }

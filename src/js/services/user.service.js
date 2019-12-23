@@ -5,7 +5,8 @@ export const userService = {
     login,
     logout,
     register,
-    authenticatedUser
+    authenticatedUser,
+    updateUser
 };
 
 function login(email, password) {
@@ -38,6 +39,15 @@ function register(user) {
         headers: { 'Content-Type': 'application/json' },
     };
     return axios.post(SIGNUP_URI,user, requestOptions);
+}
+
+function updateUser(user) {
+    const UPDATE_URI = process.env.REACT_APP_UPDATE_USER_URI;
+    const requestOptions = {
+        method: 'POST',
+        headers: {...authHeader(), 'Content-Type': 'application/json' },
+    };
+    return axios.post(UPDATE_URI,user,requestOptions).then(res => res.data);
 }
 
 function authenticatedUser() {

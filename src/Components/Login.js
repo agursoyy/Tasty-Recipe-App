@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { userActions } from '../js/actions';
+import { userActions, alertActions } from '../js/actions';
 import styles from '../styles/authentication.module.scss';
 import '../styles/authentication.css';
 import {Link} from 'react-router-dom';
@@ -85,8 +85,15 @@ class Login extends React.Component {
     handleLoginSubmit(event) {
         event.preventDefault();
         if(this.formValidation()) {
+            let redirectUrl =  "/recipes";
+            const {state} = this.props.location
+            if(state && state.prevLocation) {
+                const {prevLocation} = state;
+                redirectUrl = prevLocation;
+            }
+            
             new Promise((resolve,reject) => {
-                this.props.login(this.state.email,this.state.password);
+                this.props.login(this.state.email,this.state.password, redirectUrl);
                 resolve('LOGGED IN');
             })
             .catch(err => {
@@ -95,8 +102,38 @@ class Login extends React.Component {
 
         }
     }
+    alert() {
+        const { state} = this.props.location;
+        const { alert } = this.props;
+        console.log(state);
+        if(alert.message) {  // alerts coming from server(API).
+            return (
+                <div className={`alert ${alert.type} auth-alert`}>
+                    {
+                        alert.type === "alert-danger" ?
+                        alert.message[0].msg
+                        :
+                        alert.message
+                    }
+                </div> 
+            )
+        }
+        else if(state && state.error) {  // alerts coming from protected route attemps.
+            const {error} = state;
+            console.log(error);
+            return (
+                <div className={`alert alert-danger auth-alert`}>
+                    {
+                       error
+                    }
+                </div> 
+            )
+        }
+        else 
+            return null;
+    }
     render() {
-        const { alert,loggingIn } = this.props;
+        const { loggingIn } = this.props;
         return (
             <div className={`${styles.container} container-fluid`}>
                 <div className = {`row`}>
@@ -107,21 +144,14 @@ class Login extends React.Component {
                                     <span>Please fill in this form to login!</span>
                                 </div>
                                 {
-                                    alert.message && 
-                                    <div className={`alert ${alert.type} auth-alert`}>
-                                        {
-                                            alert.type === "alert-danger" ?
-                                              alert.message[0].msg
-                                            :
-                                                alert.message
-                                        }
-                                    </div>
+                                    this.alert()
                                 }
-
                                 <div className={`${styles.form}`}>
                                     <form>
                                         <div className={`form-group ${styles.formGroup}`}>
-                                            <input type="email" className={`form-control ${styles.inputText}`} id="loginEmail" name="email" value= {this.state.email} onChange= {this.handleInputChange} onBlur= {this.handleElementValidation} aria-describedby="emailHelp" placeholder=" "/>
+                                            <input type="email" className={`form-control ${styles.inputText}`} id="loginEmail" name="email"
+                                             value= {this.state.email} onChange= {this.handleInputChange.bind(this)} 
+                                             onBlur= {this.handleElementValidation} aria-describedby="emailHelp" placeholder=" "/>
                                             <span className={`${styles.placeholder}`}><i className="fa fa-envelope mr-2"></i>Email</span>
                                         </div>
                                         <div className={`form-group ${styles.formGroup}`}>
@@ -129,7 +159,9 @@ class Login extends React.Component {
                                             <span className={`${styles.placeholder}`}><i className="fa fa-key mr-2"></i>Password</span>
                                         </div>
                                         <div className={`${styles.buttonContainer}`}>
-                                            <button type="submit" className={`btn btn-block btn-primary ${styles.submitBtn}`} onClick = {this.handleLoginSubmit}>
+                                            <button type="submit" className={`btn btn-block btn-primary ${styles.submitBtn}`} 
+                                            onClick = {this.handleLoginSubmit}
+                                            disabled= {loggingIn}>
                                             {
                                                 loggingIn ?  
                                                 <img src={require("../assets/oval.svg")} height="22" alt="loading..."/>

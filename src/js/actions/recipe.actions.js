@@ -2,19 +2,23 @@ import { recipeConstants } from '../constants';
 import { recipeService } from '../services';
 import { alertActions } from './alert.actions';
 import { history } from '../helpers';
-
+import {store} from '../helpers'
+import {userActions} from './';
 
 export const recipeActions = {
     fetchAllRecipes,
+    fetchAuthenticatedUserRecipes,
     fetchRecipeByID,
     fetchAllRecipeCategories,
     fetchAllIngredients,
-    createRecipe
+    createRecipe,
+    addFavorites,
+    deleteFromFavorites
 };
 
-function fetchAllRecipes(page) {
-    return dispatch => {
-        dispatch(request({ page }));
+function fetchAllRecipes(page) { 
+    return (dispatch) => {
+        dispatch(request(page));
         setTimeout(() => {
             recipeService.fetchAllRecipes(page)
             .then(recipes => {
@@ -35,10 +39,32 @@ function fetchAllRecipes(page) {
     function failure(error) { return { type: recipeConstants.GETALL_RECIPES_FAILURE, error } }
 }
 
+function fetchAuthenticatedUserRecipes(page) {
+    return (dispatch) => {
+        dispatch(request(page));
+        setTimeout(() => {
+            recipeService.fetchAllRecipes(page)
+            .then(recipes => {
+                dispatch(success(recipes));
+                dispatch(alertActions.success("recipes of the authenticated user, obtained successfully"));
+            })
+            .catch(error => {
+                dispatch(failure(error));
+                if(error.response && error.response.status === 404) {
+                    dispatch(alertActions.error(error.response.data));
+                }
+            })
+        }, 380);  
+    };
+
+    function request(page) { return { type: recipeConstants.GETALL_USER_RECIPES_REQUEST, page } }
+    function success(recipes) { return { type: recipeConstants.GETALL_USER_RECIPES_SUCCESS, recipes } }
+    function failure(error) { return { type: recipeConstants.GETALL_USER_RECIPES_FAILURE, error } }
+}
 
 function fetchRecipeByID(id) {
     return dispatch => {
-        dispatch(request({ id }));
+        dispatch(request(id));
         setTimeout(() => {
             recipeService.fetchRecipeByID(id)
             .then(recipe => {
@@ -63,7 +89,7 @@ function fetchAllRecipeCategories() {
     return dispatch => {
         dispatch(request());
         setTimeout(() => {
-            recipeService.fetchAllCategories()
+            return recipeService.fetchAllCategories()
             .then(categories => {
                 dispatch(success(categories));
                 dispatch(alertActions.success("categories obtained successfully"));
@@ -132,3 +158,44 @@ function createRecipe(recipe) { // returns promise
     function failure(error) { return { type: recipeConstants.CREATE_RECIPE_FAILURE, error } }
 }
 
+function addFavorites(id) {
+    return dispatch => {
+        dispatch(request(id));
+        setTimeout(() => {
+            recipeService.addFavorites(id).then(req => {
+                dispatch(success(id));
+                dispatch(alertActions.success('Recipe has been inserted to favorites.'));
+                store.dispatch(userActions.authenticatedUser());
+                //window.location.reload();
+            }).catch(error => {
+                dispatch(failure(error));
+                if(error.response && error.response.status === 400) {
+                    dispatch(alertActions.error(error.response.data));
+                }
+            })
+        }, 0);
+    }
+    function request(loadingId) { return { type: recipeConstants.ADD_RECIPE_TO_FAVORITES_REQUEST,loadingId } }
+    function success(recipeId) { return { type: recipeConstants.ADD_RECIPE_TO_FAVORITES_SUCCESS, recipeId } }
+    function failure(error) { return { type: recipeConstants.ADD_RECIPE_TO_FAVORITES_FAILURE, error } }
+} 
+function deleteFromFavorites(id) {
+    return dispatch => {
+        dispatch(request(id));
+        setTimeout(() => {
+            recipeService.deleteFromFavorites(id).then(req => {
+                dispatch(success(id));
+                dispatch(alertActions.success('Recipe has been deleted from favorites.'));
+                store.dispatch(userActions.authenticatedUser());
+            }).catch(error => {
+                dispatch(failure(error));
+                if(error.response && error.response.status === 400) {
+                    dispatch(alertActions.error(error.response.data));
+                }
+            })
+        }, 0);
+    }
+    function request(loadingId) { return { type: recipeConstants.DELETE_RECIPE_FROM_FAVORITES_REQUEST, loadingId } }
+    function success(recipeId) { return { type: recipeConstants.DELETE_RECIPE_FROM_FAVORITES_SUCCESS, recipeId } }
+    function failure(error) { return { type: recipeConstants.DELETE_RECIPE_FROM_FAVORITES_FAILURE, error } }
+} 

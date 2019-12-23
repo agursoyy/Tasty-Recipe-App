@@ -4,7 +4,7 @@ import { authentication } from './authentication.reducer';
 import { registration } from './registration.reducer';
 import { users,authenticatedUser} from './users.reducer';
 import { alert } from './alert.reducer';
-import {recipes, recipeCategories, recipeIngredients, createRecipe} from './recipe.reducer';
+import {recipes, authenticatedUserRecipes, recipeCategories, recipeIngredients, createRecipe, addFavorites} from './recipe.reducer';
 const rootReducer = combineReducers({
   authentication,
   registration,
@@ -12,9 +12,11 @@ const rootReducer = combineReducers({
   users,
   alert,
   recipes,
+  authenticatedUserRecipes,
   recipeCategories,
   recipeIngredients,
-  createRecipe
+  createRecipe,
+  addFavorites
 });
 
 export default rootReducer;

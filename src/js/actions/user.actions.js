@@ -8,10 +8,11 @@ export const userActions = {
     login,
     logout,
     register,
-    authenticatedUser
+    authenticatedUser,
+    updateUser
 };
 
-function login(email, password) {
+function login(email, password, redirectRoute) {
     return dispatch => {
         dispatch(request({ email }));
         setTimeout(() => {
@@ -21,7 +22,7 @@ function login(email, password) {
                 dispatch(alertActions.success("login is successfull, you will be redirected"));
             }).then(() => {
                 setTimeout(() => {
-                    history.push('/'); 
+                    history.push(redirectRoute); 
                     store.dispatch(authenticatedUser());
                 }, 1000);
             })
@@ -77,17 +78,36 @@ function authenticatedUser() {
             userService.authenticatedUser()
             .then(user => {
                 dispatch(success(user));
-                dispatch(alertActions.success('user fetched successfully'));
             }).catch(error => {
                 dispatch(failure(error));
                 if(error.response && error.response.status === 400) {
                     dispatch(alertActions.error(error.response.data));
                 }
             })
-        }, 500);
+        }, 200);
     };
 
     function request(id) { return { type: userConstants.GET_USER_REQUEST, id } }
     function success(user) { return { type: userConstants.GET_USER_SUCCESS, user } }
     function failure(error) { return { type: userConstants.GET_USER_FAILURE, error } }
+}
+function updateUser(user) {
+    console.log(user);
+
+    return dispatch => {
+        console.log(user);
+        dispatch(request());
+        userService.updateUser(user).then(countOfeffectedRow => {
+            dispatch(authenticatedUser());
+        }).then(()=> {
+            dispatch(alertActions.success('profile updated successfully'));
+        }).catch(err => {
+            failure(err);
+            dispatch(alertActions.failure('error, profile can`t updated'));
+        })
+
+        function request() {return {type: userConstants.UPDATE_USER_REQUEST}} 
+        function failure(error) { return { type: userConstants.GET_USER_FAILURE, error }}
+
+    }
 }

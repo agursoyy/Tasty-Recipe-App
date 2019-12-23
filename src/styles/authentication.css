@@ -1,5 +1,5 @@
 .auth-input-error {
-    border-bottom: 3px solid #fe2d5b !important;
+    border-bottom-color: #fe2d5b !important;
 }
 .auth-alert {
     margin: 12px;

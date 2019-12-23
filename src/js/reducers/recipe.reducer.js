@@ -1,11 +1,11 @@
 import {recipeConstants} from '../constants';
-
 export function recipes(state={},action) {
     switch(action.type) {
         case recipeConstants.GETALL_RECIPES_REQUEST: 
-            return {loading: true, page: action.page};
+            return {loading: true, page: action.page, ...state};
         case recipeConstants.GETALL_RECIPES_SUCCESS:
-            return {recipes: action.recipes};
+            return {totalPage: action.recipes.totalPage, pagingOffSet: action.recipes.pagingOffSet,
+                 result: action.recipes.result};
         case recipeConstants.GETALL_RECIPES_FAILURE:
             return {};
 
@@ -21,11 +21,25 @@ export function recipes(state={},action) {
     }
 }
 
+export function authenticatedUserRecipes(state={}, action) {
+    switch(action.type) {
+        case recipeConstants.GETALL_USER_RECIPES_REQUEST: 
+        return {loading: true, page: action.page, ...state};
+    case recipeConstants.GETALL_USER_RECIPES_SUCCESS:
+        return {totalPage: action.recipes.totalPage, pagingOffSet: action.recipes.pagingOffSet,
+             result: action.recipes.result};
+    case recipeConstants.GETALL_USER_RECIPES_FAILURE:
+        return {};
+    default: 
+        return state;
+    }
+}
+
 export function recipeCategories(state={}, action) {
     switch(action.type) {
            
         case recipeConstants.GET_RECIPE_CATEGORIES_REQUEST: 
-            return {loading: true};
+            return {loading: true, ...state};
         case recipeConstants.GET_RECIPE_CATEGORIES_SUCCESS:
             return {categories: action.categories};
         case recipeConstants.GET_RECIPE_CATEGORIES_FAILURE:
@@ -38,14 +52,13 @@ export function recipeCategories(state={}, action) {
 export function recipeIngredients(state={},action) {
     switch(action.type) {
         case recipeConstants.GETALL_INGREDIENTS_REQUEST:
-            return {loading: true};
+            return {loading: true, ...state};
         case recipeConstants.GETALL_INGREDIENTS_SUCCESS:
             return {ingredients: action.ingredients};
         case recipeConstants.GETALL_INGREDIENTS_FAILURE: 
             return {};
         default:
             return state;
-            
     }
 }
 
@@ -60,4 +73,23 @@ export function createRecipe(state={},action) {
         default:
           return state
       }
+}
+
+export function addFavorites(state={},action) {
+    switch(action.type) {
+        case recipeConstants.ADD_RECIPE_TO_FAVORITES_REQUEST:
+            return {loading: true, loadingId: action.loadingId};
+        case recipeConstants.ADD_RECIPE_TO_FAVORITES_SUCCESS: 
+            return {added_to_favorites: true, recipeId: action.recipeId}
+        case recipeConstants.ADD_RECIPE_TO_FAVORITES_FAILURE:
+            return {};
+        case recipeConstants.DELETE_RECIPE_FROM_FAVORITES_REQUEST: 
+            return {loading: true, loadingId: action.loadingId};
+        case recipeConstants.DELETE_RECIPE_FROM_FAVORITES_SUCCESS: 
+            return {deleted_from_favorites: true};
+        case recipeConstants.DELETE_RECIPE_FROM_FAVORITES_FAILURE: 
+            return {};
+        default: 
+            return state;
+    }
 }

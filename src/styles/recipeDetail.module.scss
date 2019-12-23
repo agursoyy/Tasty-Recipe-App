@@ -15,12 +15,15 @@ $font-family-title: 'Roboto', sans-serif;
             font-family: $font-family-title;
             color: #9b252e;
         }
-        .imgContainer img {
-            width: 100%;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            border: 1px solid #ced4da;;
-
+        .imgContainer {
+            img {
+                width: 100%;
+                max-height: 50vh;
+                border-top-left-radius: 15px;
+                border-top-right-radius: 15px;
+                border: 1px solid #ced4da;;
+    
+            }
         }
         .information {
             display: flex;

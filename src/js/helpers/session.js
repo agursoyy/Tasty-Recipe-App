@@ -8,7 +8,8 @@ export const session = {
 
 function setSessionCookie (session) {
     removeSessionCookie();
-    Cookies.set("session", session, { expires: 43200 });  // store  session as json text.
+    const inHalfADay = 0.5;
+    Cookies.set("session", session, { expires: inHalfADay });  // store  session as json text.
   };
 function getSessionCookie() {
     const sessionCookie = Cookies.get("session");  // in json form.

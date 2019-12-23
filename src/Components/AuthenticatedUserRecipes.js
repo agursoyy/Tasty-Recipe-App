@@ -8,7 +8,7 @@ import Recipe from './Recipe';
 import styles from '../styles/recipeList.module.scss';
 import Loading from './Loading';
 
-class RecipeList extends React.Component {
+class AllRecipes extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -37,10 +37,10 @@ class RecipeList extends React.Component {
     fetchAllRecipes() {
         const {fetchAllRecipes} = this.props;
         const page = this.getCurrentPage();
-        fetchAllRecipes(page); // get the recipes of the all users.
+        fetchAllRecipes(page);
     }
     getRecipeList() { // invoked if recipes has been obtained.
-        const {result,} = this.props;  // recipes is in defined status while it's invoked.
+        const {result} = this.props;  // recipes is in defined status while it's invoked.
         if(result) {
             const recipeList = result.map((recipe,index) => <div key={index} className="col-lg-3 col-md-4 col-6 mb-4">
                 <Recipe recipe={recipe}/>
@@ -54,7 +54,6 @@ class RecipeList extends React.Component {
     }
     
     render(){
-    
         const {loading, totalPage, pagingOffSet,result, alert} = this.props;
      
         if(alert.type && alert.type === "alert-danger") {
@@ -85,22 +84,23 @@ class RecipeList extends React.Component {
                             innerClass={styles['pagination']}
                             activeLinkClass={styles['pagination--active-element']}
                         />
+                       
                     </div>
                     
                 </>
             )
         }
         return null;
+        
     }
 }
-function mapState(state,) {
-    const { loading, totalPage, pagingOffSet, result} = state.recipes;
+function mapState(state) {
+    const { loading, totalPage, pagingOffSet, result} = state.authenticatedUserRecipes;
     const { alert } = state;
     return { loading, totalPage, pagingOffSet, result, alert };
 }
-
 const actionCreators = {
-    fetchAllRecipes: recipeActions.fetchAllRecipes
+    fetchAllRecipes: recipeActions.fetchAuthenticatedUserRecipes
 };
 
-export default connect(mapState, actionCreators)(RecipeList);
+export default connect(mapState, actionCreators)(AllRecipes);

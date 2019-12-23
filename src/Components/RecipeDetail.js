@@ -32,10 +32,12 @@ class RecipeDetail extends React.Component {
          const arr = directions.split("\n");
          return arr;
      }
-     getImageRecipe() {
+
+    getImageRecipe() {
         const {recipe} = this.props;
-       const img = recipe.RecipeImages.imagePath ? <img src={`data:image/jpg;base64,${recipe.RecipeImages.image}`} alt="rec_img"/> 
-       : <img src={require("../assets/french.jpg")} alt="recipe_img"/>;
+       const img = recipe.RecipeImages.length > 0 && recipe.RecipeImages[0].image ? <img src={`data:image/jpg;base64,${recipe.RecipeImages[0].image}`} alt="rec_img"/> 
+       : 
+       <img src={require("../assets/not_found.png")} alt="recipe_img"/>
        return img;
     }
     render() {
@@ -58,15 +60,15 @@ class RecipeDetail extends React.Component {
                             <h2 className ={`d-none d-md-block ${styles.title}`}>{recipe.name} ({(recipe.RecipeCategory.name.toLowerCase())})</h2>
                             <h5 className={`d-block d-md-none  ${styles.title}`}>{recipe.name} ({(recipe.RecipeCategory.name.toLowerCase())}</h5>
                             <div className={styles.imgContainer}>
-                               { <img src={require("../assets/french.jpg")} alt="recipe_img"/>}
+                               { this.getImageRecipe()}
                             </div>
                             <div className={`${styles.information}`}>
                                <div>
-                                    <i class="fas fa-table"></i>
+                                    <i className="fas fa-table"></i>
                                     <span className={styles.text}>{this.getRecipeCreationDate(recipe.createdAt)}</span>
                                 </div>
                                 <div>
-                                    <i class="fas fa-utensils"></i>
+                                    <i className="fas fa-utensils"></i>
                                     <span className={styles.text}>{recipe.yieldServingsLow}-{recipe.yieldServingsHigh} servings</span>
                                 </div>
                                 <div>
@@ -74,7 +76,7 @@ class RecipeDetail extends React.Component {
                                     <span className={styles.text}>{recipe.prepTimeMins} minutes</span>
                                 </div>
                                 <div>
-                                    <i class="fas fa-clock"></i>
+                                    <i className="fas fa-clock"></i>
                                     <span className={styles.text}>{recipe.cookTimeMins} minutes</span>
                                 </div>
                              
@@ -88,7 +90,7 @@ class RecipeDetail extends React.Component {
                                         recipe.Ingredients.constructor === Array &&
                                         recipe.Ingredients.map((ingredient,index) =>
                                         <li key={index} className="col-sm-6">
-                                            <i class="fas fa-dot-circle mr-3"></i>
+                                            <i className="fas fa-dot-circle mr-3"></i>
                                             {ingredient.Recipe_Ingredient.amount.toLowerCase()} {ingredient.name.toLowerCase()}
                                         </li>)
                                     }
@@ -101,7 +103,7 @@ class RecipeDetail extends React.Component {
                                 <ol className={styles.recipeDirectionsList}>
                                     { 
                                         this.getRecipeDirections(recipe.directions).map((direction,index) =>
-                                        <li key={index} className="border">
+                                        <li key={index} className="">
                                             {direction}
                                         </li>)
                                     }

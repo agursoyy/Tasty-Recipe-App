@@ -184,7 +184,8 @@ class Signup extends React.Component {
                                             <span className={`${styles.placeholder}`}><i className="fa fa-key mr-2"></i>Confirm password</span>
                                         </div>     
                                         <div className={`${styles.buttonContainer}`}>
-                                            <button type="submit" className={`btn btn-block btn-primary ${styles.submitBtn}`} onClick = {this.handleRegisterSubmit}>
+                                            <button type="submit" className={`btn btn-block btn-primary ${styles.submitBtn}`}
+                                             onClick = {this.handleRegisterSubmit} disabled= {registering}>
                                             {
                                                  registering ?  
                                                  <img src={require("../assets/oval.svg")} height="22" alt="loading..."/>
