@@ -74,6 +74,18 @@ export function createRecipe(state={},action) {
           return state
       }
 }
+export function deleteRecipe(state={},action) {
+    switch (action.type) {
+        case recipeConstants.DELETE_RECIPE_REQUEST:
+          return { deleting_recipe: true };
+        case recipeConstants.DELETE_RECIPE_SUCCESS:
+          return {deleted_recipe: true};
+        case recipeConstants.DELETE_RECIPE_FAILURE:
+          return {};
+        default:
+          return state
+      }
+}
 
 export function addFavorites(state={},action) {
     switch(action.type) {

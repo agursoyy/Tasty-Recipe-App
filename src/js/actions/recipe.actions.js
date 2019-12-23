@@ -13,7 +13,8 @@ export const recipeActions = {
     fetchAllIngredients,
     createRecipe,
     addFavorites,
-    deleteFromFavorites
+    deleteFromFavorites,
+    deleteRecipe
 };
 
 function fetchAllRecipes(page) { 
@@ -198,4 +199,26 @@ function deleteFromFavorites(id) {
     function request(loadingId) { return { type: recipeConstants.DELETE_RECIPE_FROM_FAVORITES_REQUEST, loadingId } }
     function success(recipeId) { return { type: recipeConstants.DELETE_RECIPE_FROM_FAVORITES_SUCCESS, recipeId } }
     function failure(error) { return { type: recipeConstants.DELETE_RECIPE_FROM_FAVORITES_FAILURE, error } }
-} 
+}
+
+function deleteRecipe(id) {
+    return dispatch => {
+        dispatch(request(id));
+        setTimeout(() => {
+            recipeService.deleteRecipe(id).then(req => {
+                dispatch(success(id));
+                dispatch(alertActions.success('Recipe has been deleted.'));
+                store.dispatch(userActions.authenticatedUser());
+            }).catch(error => {
+                dispatch(failure(error));
+                if(error.response && error.response.status === 400) {
+                    dispatch(alertActions.error(error.response.data));
+                }
+            })
+        }, 0);
+    }
+    function request(loadingId) { return { type: recipeConstants.DELETE_RECIPE_REQUEST, loadingId } }
+    function success(recipeId) { return { type: recipeConstants.DELETE_RECIPE_SUCCESS, recipeId } }
+    function failure(error) { return { type: recipeConstants.DELETE_RECIPE_FAILURE, error } }
+}
+

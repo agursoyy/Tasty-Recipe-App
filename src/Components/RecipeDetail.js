@@ -35,10 +35,10 @@ class RecipeDetail extends React.Component {
 
     getImageRecipe() {
         const {recipe} = this.props;
-       const img = recipe.RecipeImages.length > 0 && recipe.RecipeImages[0].image ? <img src={`data:image/jpg;base64,${recipe.RecipeImages[0].image}`} alt="rec_img"/> 
-       : 
-       <img src={require("../assets/not_found.png")} alt="recipe_img"/>
-       return img;
+        const img =  recipe.recipe.image ? <img src={`data:image/jpg;base64,${recipe.recipe.image}`} alt="rec_img"/> 
+        : 
+        <img src={require("../assets/not_found.png")} alt="recipe_img"/>
+        return img;
     }
     render() {
         console.log(this.props.recipe);
@@ -57,29 +57,32 @@ class RecipeDetail extends React.Component {
                 <div className={`container ${styles.container}`}>
                     <div className="row">
                         <div className={`col-sm-7 ${styles.recipeContainer}`}>
-                            <h2 className ={`d-none d-md-block ${styles.title}`}>{recipe.name} ({(recipe.RecipeCategory.name.toLowerCase())})</h2>
-                            <h5 className={`d-block d-md-none  ${styles.title}`}>{recipe.name} ({(recipe.RecipeCategory.name.toLowerCase())}</h5>
+                            <h2 className ={`d-none d-md-block ${styles.title}`}>{recipe.recipe.name} ({(recipe.recipe.categoryName.toLowerCase())})</h2>
+                            <h5 className={`d-block d-md-none  ${styles.title}`}>{recipe.recipe.name} ({(recipe.recipe.categoryName.toLowerCase())}</h5>
                             <div className={styles.imgContainer}>
                                { this.getImageRecipe()}
                             </div>
                             <div className={`${styles.information}`}>
                                <div>
                                     <i className="fas fa-table"></i>
-                                    <span className={styles.text}>{this.getRecipeCreationDate(recipe.createdAt)}</span>
+                                    <span className={styles.text}>{this.getRecipeCreationDate(recipe.recipe.createdAt)}</span>
                                 </div>
                                 <div>
                                     <i className="fas fa-utensils"></i>
-                                    <span className={styles.text}>{recipe.yieldServingsLow}-{recipe.yieldServingsHigh} servings</span>
+                                    <span className={styles.text}>{recipe.recipe.yieldServingsLow}-{recipe.recipe.yieldServingsHigh} servings</span>
                                 </div>
                                 <div>
                                     <img src={require("../assets/prep-time.svg")} height="22" alt="prep-time-icon"/>
-                                    <span className={styles.text}>{recipe.prepTimeMins} minutes</span>
+                                    <span className={styles.text}>{recipe.recipe.prepTimeMins} minutes</span>
                                 </div>
                                 <div>
                                     <i className="fas fa-clock"></i>
-                                    <span className={styles.text}>{recipe.cookTimeMins} minutes</span>
+                                    <span className={styles.text}>{recipe.recipe.cookTimeMins} minutes</span>
                                 </div>
-                             
+                                <div>
+                                    <i class="fas fa-hourglass"></i>
+                                    <span className={styles.text}>{recipe.recipe.totalTime} minutes</span>
+                                </div>
                             </div>
                             <div className={`${styles.ingredients}`}>
                                 <h3 className ={`d-none d-md-block ${styles.ingredientsTitle}`}>Ingredients</h3>
@@ -91,7 +94,7 @@ class RecipeDetail extends React.Component {
                                         recipe.Ingredients.map((ingredient,index) =>
                                         <li key={index} className="col-sm-6">
                                             <i className="fas fa-dot-circle mr-3"></i>
-                                            {ingredient.Recipe_Ingredient.amount.toLowerCase()} {ingredient.name.toLowerCase()}
+                                            {ingredient.amount.toLowerCase()} {ingredient.name.toLowerCase()}
                                         </li>)
                                     }
                                 </ul>
@@ -102,7 +105,7 @@ class RecipeDetail extends React.Component {
                                 <hr/>
                                 <ol className={styles.recipeDirectionsList}>
                                     { 
-                                        this.getRecipeDirections(recipe.directions).map((direction,index) =>
+                                        this.getRecipeDirections(recipe.recipe.directions).map((direction,index) =>
                                         <li key={index} className="">
                                             {direction}
                                         </li>)

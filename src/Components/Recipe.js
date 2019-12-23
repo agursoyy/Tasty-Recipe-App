@@ -7,6 +7,7 @@ class Recipe extends React.Component {
     constructor(props) {
         super(props);
         this.handleAddFavorite = this.handleAddFavorite.bind(this);
+        this.handleDeleteRecipe = this.handleDeleteRecipe.bind(this);
     }
     removeSpaces(str) {
         return str.replace(/\s/g, '-')
@@ -51,6 +52,18 @@ class Recipe extends React.Component {
         }
       
     }
+    async handleDeleteRecipe(e) {
+        const {user, recipe,deleteRecipe} = this.props;
+        const {id} = recipe;
+        if(!user) {
+            this.redirectIfNotAuthorized();
+        }
+        else {
+            await deleteRecipe(id);
+            window.location.reload(false);
+        }
+      
+    }
     redirectIfNotAuthorized() {
         this.props.history.push('/login');
     }
@@ -66,6 +79,12 @@ class Recipe extends React.Component {
                     onClick = {this.handleAddFavorite}>
                         {
                            <i className={`fas fa-heart ${styles['like-recipe--icon']}`}></i>
+                        }
+                    </div>
+                    <div className={`${styles['delete-recipe']}`}
+                    onClick = {this.handleDeleteRecipe}>
+                        {
+                           <i className={`fas fa-trash ${styles['delete-recipe--icon']}`}></i>
                         }
                     </div>
                 </div>
@@ -91,7 +110,8 @@ function mapState(state) {
 const actionCreators = {
     addFavorites: recipeActions.addFavorites,
     deleteFromFavorites: recipeActions.deleteFromFavorites,
-    authenticatedUser: userActions.authenticatedUser
+    authenticatedUser: userActions.authenticatedUser,
+    deleteRecipe:recipeActions.deleteRecipe
 };
 
 export default connect(mapState, actionCreators)(withRouter(Recipe));

@@ -8,7 +8,8 @@ export const recipeService = {
     fetchAllIngredients,
     createRecipe,
     addFavorites,
-    deleteFromFavorites
+    deleteFromFavorites,
+    deleteRecipe
 }
 function fetchAllRecipes(page) {
     const ALL_RECIPES_URI_PAGE = process.env.REACT_APP_ALL_RECIPES_URI + page;
@@ -58,4 +59,13 @@ function deleteFromFavorites(id) {
         headers: { ...authHeader(), 'Content-Type': 'application/json'},
     };
     return axios.post(DELETE_FROM_FAVORITES_URI,{recipeId: id},requestOptions).then(res => res.data);
+}
+
+function deleteRecipe(id) {
+    const DELETE_RECIPE_URI = process.env.REACT_APP_DELETE_RECIPE_URI;
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json'},
+    };
+    return axios.post(DELETE_RECIPE_URI,{recipeId: id},requestOptions).then(res => res.data);
 }

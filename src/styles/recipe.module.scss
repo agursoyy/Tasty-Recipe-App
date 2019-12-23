@@ -50,6 +50,17 @@
                     color: $color-primary;
                 }
             }
+            .delete-recipe--icon {
+                font-size: 30px;
+                padding-top: 3px;
+                color: #fff;
+            }
+            &:hover {
+                background-color: rgba(0,0,0,0.6);
+                .delete-recipe--icon {
+                    color: $color-primary;
+                }
+            }
         }
         .like-recipe-unfav {
             background-color: rgba(0,0,0,0.6);
@@ -58,6 +69,32 @@
             }
             &:hover {
                 .like-recipe--icon {
+                }
+            }
+        }
+        .delete-recipe {
+            position: absolute;
+            z-index: 555;
+            padding: 10px;
+            top: 163px;
+            right: 10px;
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(45, 45, 45,0.5);
+            cursor: pointer;
+            .delete-recipe--icon {
+                font-size: 30px;
+                padding-top: 3px;
+                color: #fff;
+            }
+            &:hover {
+                background-color: rgba(0,0,0,0.6);
+                .delete-recipe--icon {
+                    color: $color-primary;
                 }
             }
         }
